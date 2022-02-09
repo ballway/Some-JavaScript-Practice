@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework2 (表單製作)</title>
+
+    <style>
+        
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        fieldset {
+            /*width: 450px;*/
+            margin: 8px;
+            /*border: 3px solid navy;
+            border-radius: 20px;*/
+            padding: 10px;
+        }
+
+        legend {
+            font: bold 20px navy;
+            margin-left: 10px;
+            /*border: 3px solid navy;*/
+            /*text-decoration: underline;*/
+        }
+        
+        body{
+            padding-left:450px;
+            padding-right:450px;
+            background-color:gainsboro;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .nav_link {
+            font-size: 20px;
+        }
+
+        em {
+            color: red;
+        }
+
+        .out_border {
+            border: 5px solid dodgerblue;
+            padding: 10px;
+            background-color:white;
+        }
+
+        .btn_submit {
+            font: bold  20px navy;
+            width:100px;
+            height:30px;
+            margin-bottom:10px;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <hgroup><h1>《JS 作業大禮包》</h1></hgroup>
+        <nav>
+            <a class="nav_link" href="homework1.html">九九乘法表</a>
+            <a class="nav_link" href="homework2.html">表單製作</a>
+            <a class="nav_link" href="homework3.html">評點製作</a>
+            <a class="nav_link" href="homework4.html">廣告輪播</a>
+        </nav>
+    </header>
+
+    <form>
+        <fieldset class="out_border">
+            <legend>會員表單</legend>
+
+            <fieldset>
+                <legend>姓名欄<em> (必填) </em></legend>
+                <label>姓名:</label>
+                <input type="text" id="idName" size="10" onblur="checkAll()"/><!-- 瀏覽器執行到此標籤會建立一個物件-->
+                <span id="idsp_name"></span><br />
+            </fieldset>
+
+            <br />
+
+            <fieldset>
+                <legend>密碼欄<em> (必填) </em></legend>
+                <label>Password:</label>
+                <input type="password" id="idPwd" size="10" onblur="checkAll()"/><!-- 瀏覽器執行到此標籤會建立一個物件-->
+                <span id="idsp_pwd"></span><br />
+            </fieldset>
+
+            <br />
+
+            <fieldset>
+                <legend>日期欄<em> (必填) </em></legend>
+                <label>日期:</label>
+                <input type="datetime" id="idDate" size="10" onblur="checkAll()"/><!-- 瀏覽器執行到此標籤會建立一個物件-->
+                <span id="idsp_date"></span><br />
+            </fieldset>
+
+            <div style="text-align:center ; margin-top:20px">
+                <input type="button" id="idbut" value="送出表單" onclick="checkAll();" class="btn_submit" ; />
+            </div>
+
+        </fieldset>
+    </form>
+
+    <script>
+        function checkAll() {
+
+            /*----------------Name----------------*/
+            let theNameObj = document.getElementById("idName");
+            let Name_string = theNameObj.value;
+            let sp_name = document.getElementById("idsp_name");
+
+            let check_chi = true;
+
+            if (Name_string == "") {
+                sp_name.innerHTML = "名字不可以空白";
+            }
+
+            else if (Name_string.length >= 2) {
+
+                for (let i = 0; i < Name_string.length; i++) {
+                    let name_ch = Name_string.charCodeAt(i);
+                    if (name_ch < 0x4e00 || name_ch > 0x9fff) {
+                        check_chi = false;
+                    }
+
+                    if (check_chi == false) {
+                        break;
+                    }
+                }
+
+                if (check_chi == false) {
+                    sp_name.innerHTML = "只能有中文字";
+                }
+
+                if (check_chi) {
+                    sp_name.innerHTML = "名字Correct!";
+                    /*alert("Correct!");*/
+                }
+                else {
+                    sp_name.innerHTML = "名字格式不對喔";
+                    /*alert("名字格式不對喔");*/
+                }
+            }
+
+            else {
+                sp_name.innerHTML = "名字至少要2個字";
+                /*alert("名字至少要2個字");*/
+            }
+
+
+            /*----------------Password----------------*/
+            let thePwdObj = document.getElementById("idPwd");
+            let Pwd_string = thePwdObj.value;
+            let sp_pwd = document.getElementById("idsp_pwd");
+
+            let check_eng = false;
+            let check_num = false;
+            let check_mark = false;
+
+            if (Pwd_string == "") {
+                sp_pwd.innerHTML = "密碼不可以空白";
+                /*alert("密碼不可以空白");*/
+            }
+
+            else if (Pwd_string.length >= 6) {
+
+                for (let i = 0; i < Pwd_string.length; i++) {
+                    let pwd_ch = Pwd_string.charAt(i).toUpperCase();
+
+                    if (pwd_ch >= "A" && pwd_ch <= "Z") {
+                        check_eng = true;
+                    }
+                    if (pwd_ch >= "0" && pwd_ch <= "9") {
+                        check_num = true;
+                    }
+                    if (pwd_ch == "!" || pwd_ch == "@" || pwd_ch == "#" || pwd_ch == "$" || pwd_ch == "%" || pwd_ch == "^" || pwd_ch == "&" || pwd_ch == "*") {
+                        check_mark = true;
+                    }
+
+                    if (check_eng && check_num && check_mark) {
+                        break;
+                    }
+                }
+
+                if (check_eng && check_num && check_mark) {
+                    sp_pwd.innerHTML = "密碼 Correct!";
+                    /*alert("密碼 Correct!");*/
+                }
+                else {
+                    sp_pwd.innerHTML = "密碼格式不對喔";
+                    /*alert("密碼格式不對喔");*/
+                }
+            }
+
+            else {
+                sp_pwd.innerHTML = "密碼至少要6個字";
+                /*alert("密碼至少要6個字");*/
+            }
+
+            /*----------------Date----------------*/
+            let theDateObj = document.getElementById("idDate");
+            let Date_string = theDateObj.value;
+            let sp_Date = document.getElementById("idsp_date");
+
+            let theYear;
+            let theMonth;
+            let theDate;
+
+            let year_check = true;
+            let month_check = true;
+            let date_check = true;
+
+            if (Date_string.length == 10) {
+                if (Date_string.charAt(4) == "/" && Date_string.charAt(7) == "/") {
+
+                    theYear = Date_string.substring(0, 4);
+                    theMonth = Date_string.substring(5, 7);
+                    theDate = Date_string.substring(8, 10);
+
+                    /*確認年份、月份、日期數字範圍*/
+                    if (theYear >= 1970) {
+                        /*console.log("\n年份在範圍內");*/
+                    }
+                    else {
+                        year_check = false;
+                    }
+
+                    if (theMonth >= 1 && theMonth <= 12) {
+                        /*console.log("月份在範圍內");*/
+                    }
+                    else {
+                        month_check = false;
+                    }
+
+                    if (theDate >= 1 && theDate <= 31) {
+                        /*  二月 的閏年判斷  */
+                        if (theMonth == 2) {
+                            if (theYear % 4 == 0 && theYear % 100 != 0) {
+                                console.log('閏年');
+                                if (theDate > 29) date_check = false;
+
+                            } else if (theYear % 400 == 0) {
+                                console.log('閏年');
+                                if (theDate > 29) date_check = false;
+
+                            } else {
+                                console.log('不是閏年');
+                                if (theDate > 28) date_check = false;
+                            }
+                        }
+                        else {
+                            /*console.log("日期在範圍內");*/
+                        }
+
+                        /*  四、六、九、十一月 的日期判斷  */
+                        if (theMonth == 4 || theMonth == 6 || theMonth == 9 || theMonth == 11) {
+                            if (theDate == 31) {
+                                date_check = false;
+                            }
+                        }
+                    }
+                    else {
+                        date_check = false;
+                    }
+
+                    if (year_check && month_check && date_check) {
+                        sp_Date.innerHTML = "日期 Correct!";
+                        /*let d = new Date(Date_string);
+                            console.log(d);*/
+                    }
+                    else {
+                        sp_Date.innerHTML = "請依照格式輸入日期 (數字超出範圍)";
+                    }
+                }
+            }
+            else {
+                sp_Date.innerHTML = "請依照格式輸入日期 (共10碼)";
+            }
+
+        }
+
+    </script>
+</body>
+</html>

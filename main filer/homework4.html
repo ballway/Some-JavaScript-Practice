@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework4 (廣告輪播)</title>
+
+    <style>
+        
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        fieldset {
+            /*width: 450px;*/
+            margin: 8px;
+            /*border: 3px solid navy;
+            border-radius: 20px;*/
+            padding: 10px;
+        }
+
+        legend {
+            font: bold 20px navy;
+            text-align:center;
+        }
+        
+        body{
+            padding-left:400px;
+            padding-right:400px;
+            background-color:gainsboro;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .nav_link {
+            font-size: 20px;
+        }
+
+        .out_border {
+            border: 5px solid darkgreen;
+            border-radius:20px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .banner_area {
+            /*background-color:lemonchiffon;*/
+            background-color: white;
+            height: 400px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .ad_size{
+            height:400px;
+        }
+
+        .btn_area {
+            user-select: none;
+            text-align:center;
+        }
+
+        .dot_button {
+            font-size: 40px;
+            color:black;
+        }
+
+        .next_button{
+            background-color:white;
+            border:solid 2px black;
+            padding:5px;
+        }
+
+        .pause_button {
+            background-color: white;
+            border: solid 2px black;
+            padding: 5px;
+            width:200px;
+            margin-left: 200px;
+            margin-right: 200px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <hgroup><h1>《JS 作業大禮包》</h1></hgroup>
+        <nav>
+            <a class="nav_link" href="homework1.html">九九乘法表</a>
+            <a class="nav_link" href="homework2.html">表單製作</a>
+            <a class="nav_link" href="homework3.html">評點製作</a>
+            <a class="nav_link" href="homework4.html">廣告輪播</a>
+        </nav>
+    </header>
+
+    <form>
+        <fieldset class="out_border">
+            <legend>廣告輪播欄</legend>
+
+            <div class="banner_area">
+                <span id="idsp_image"><a href='https://gnn.gamer.com.tw/detail.php?sn=224626'><img class='ad_size' src='banner/ban1.jpeg' alt='無法顯示圖片' title='《神魔之塔》x《我的英雄學院》合作活動 12 月中旬展開' /></a></span>
+            </div>
+
+            <div class="btn_area" style="margin-bottom:30px">
+                <span id="idsp_dot1" class="dot_button" onclick="get_banner(1)">●</span>
+                <span id="idsp_dot2" class="dot_button" style="margin-left: 30px" onclick="get_banner(2)">●</span>
+                <span id="idsp_dot3" class="dot_button" style="margin-left: 30px" onclick="get_banner(3)">●</span>
+                <span id="idsp_dot4" class="dot_button" style="margin-left: 30px" onclick="get_banner(4)">●</span>
+                <span id="idsp_dot5" class="dot_button" style="margin-left: 30px" onclick="get_banner(5)">●</span>
+            </div>
+
+            <div class="btn_area" style="margin-bottom:15px">
+                <span id="idsp_btn_back" class="next_button" onclick="back()">⇐</span>
+                <span id="idsp_btn_pause" class="pause_button" onclick="pause()">II</span>
+                <span id="idsp_btn_next" class="next_button" onclick="next()">⇒</span>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <script>
+
+        let str_ban1 = "<a href='https://gnn.gamer.com.tw/detail.php?sn=224626'><img class='ad_size' src='banner/ban1.jpeg' alt='無法顯示圖片' title='《神魔之塔》x《我的英雄學院》合作活動 12 月中旬展開' / ></a>";
+        let str_ban2 = "<a href='https://gnn.gamer.com.tw/detail.php?sn=216554'><img class='ad_size' src='banner/ban2.jpeg' alt='無法顯示圖片' title='《神魔之塔》20.1 版本「變身！假面騎士神魔時代！」' / ></a>";
+        let str_ban3 = "<a href='https://gnn.gamer.com.tw/detail.php?sn=212590'><img class='ad_size' src='banner/ban3.jpeg' alt='無法顯示圖片' title='《神魔之塔》19.8 版本「神魔交錯鬼滅之刃」' / ></a>";
+        let str_ban4 = "<a href='https://gnn.gamer.com.tw/detail.php?sn=224822'><img class='ad_size' src='banner/ban4.jpeg' alt='無法顯示圖片' title='《神魔之塔》「圓桌騎士」系列 12/6 開放潛解' / ></a>";
+        let str_ban5 = "<a href='https://gnn.gamer.com.tw/detail.php?sn=200489'><img class='ad_size' src='banner/ban5.jpeg' alt='無法顯示圖片' title='《神魔之塔》x《七大罪》合作活動 8 月 3 日展開' / ></a>";
+
+        let isPause = false;
+        let banner_code = 1;
+        change_dot_color();
+
+        let t = window.setInterval(auto_change_banner, 2000);
+
+        //知道現在要換哪一張圖片的函式
+        function get_banner(argument) {
+            banner_code = argument;
+
+            if (banner_code == 1) {
+                document.getElementById("idsp_image").innerHTML = str_ban1;
+            }
+            else if (banner_code == 2) {
+                document.getElementById("idsp_image").innerHTML = str_ban2;
+            }
+            else if (banner_code == 3) {
+                document.getElementById("idsp_image").innerHTML = str_ban3;
+            }
+            else if (banner_code == 4) {
+                document.getElementById("idsp_image").innerHTML = str_ban4;
+            }
+            else if (banner_code == 5) {
+                document.getElementById("idsp_image").innerHTML = str_ban5;
+            }
+
+            change_dot_color();
+
+            window.clearTimeout(t);
+            t = window.setInterval(auto_change_banner, 2000);
+        }
+
+        //控制暫停按鈕功能的函式
+        function pause() {
+            if (isPause == false) {
+                document.getElementById("idsp_btn_pause").innerHTML = "▶";
+                isPause = true;
+                window.clearTimeout(t);
+            }
+            else {
+                document.getElementById("idsp_btn_pause").textContent = "II";
+                isPause = false;
+                t = window.setInterval(auto_change_banner, 2000);
+            }
+        }
+
+        function next() {
+            banner_code = banner_code + 1;
+            if (banner_code > 5) {
+                banner_code = 1;
+            }
+
+            get_banner(banner_code);
+
+            window.clearTimeout(t);
+            t = window.setInterval(auto_change_banner, 2000);
+        }
+
+        function back() {
+            banner_code = banner_code - 1;
+            if (banner_code < 1) {
+                banner_code = 5;
+            }
+
+            get_banner(banner_code);
+
+            window.clearTimeout(t);
+            t = window.setInterval(auto_change_banner, 2000);
+        }
+
+
+        //自動換圖片的函式，搭配 window.setInterval 使用
+        function auto_change_banner() {
+
+            change_dot_color();
+
+            if (banner_code >= 5) {
+                banner_code = 1;
+            }
+            else if (banner_code >= 1 && banner_code <= 4) {
+                banner_code++;
+            }
+            get_banner(banner_code);
+        }
+
+        //控制圖片索引鍵顏色的函式
+        function change_dot_color() {
+            let dot1_style = document.getElementById("idsp_dot1").style;
+            let dot2_style = document.getElementById("idsp_dot2").style;
+            let dot3_style = document.getElementById("idsp_dot3").style;
+            let dot4_style = document.getElementById("idsp_dot4").style;
+            let dot5_style = document.getElementById("idsp_dot5").style;
+
+
+            if (banner_code == 1) {
+                dot1_style.color = "gold";
+                dot2_style.color = "black";
+                dot3_style.color = "black";
+                dot4_style.color = "black";
+                dot5_style.color = "black";
+            }
+
+            else if (banner_code == 2) {
+                dot1_style.color = "black";
+                dot2_style.color = "gold";
+                dot3_style.color = "black";
+                dot4_style.color = "black";
+                dot5_style.color = "black";
+            }
+
+            else if (banner_code == 3) {
+                dot1_style.color = "black";
+                dot2_style.color = "black";
+                dot3_style.color = "gold";
+                dot4_style.color = "black";
+                dot5_style.color = "black";
+            }
+
+            else if (banner_code == 4) {
+                dot1_style.color = "black";
+                dot2_style.color = "black";
+                dot3_style.color = "black";
+                dot4_style.color = "gold";
+                dot5_style.color = "black";
+            }
+
+            else if (banner_code == 5) {
+                dot1_style.color = "black";
+                dot2_style.color = "black";
+                dot3_style.color = "black";
+                dot4_style.color = "black";
+                dot5_style.color = "gold";
+            }
+        }
+
+    </script>
+</body>
+</html>

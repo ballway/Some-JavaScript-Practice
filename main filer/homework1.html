@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework1 (九九乘法表)</title>        
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding-left: 360px;
+            padding-right: 360px;
+            background-color: gainsboro;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom:50px;
+        }
+
+        .nav_link {
+            font-size: 20px;
+        }
+
+        table {
+            width:800px;
+            border: 5px solid navy;
+            border-collapse: collapse;
+            background-color:antiquewhite;
+        }
+
+        tr, td {
+            border: 2px solid orange;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color:blue;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <hgroup><h1>《JS 作業大禮包》</h1></hgroup>
+        <nav>
+            <a class="nav_link" href="homework1.html">九九乘法表</a>
+            <a class="nav_link" href="homework2.html">表單製作</a>
+            <a class="nav_link" href="homework3.html">評點製作</a>
+            <a class="nav_link" href="homework4.html">廣告輪播</a>
+        </nav>
+    </header>
+
+    <script>
+        //let sum = 0;
+        //for (let i = 1; i <= 5; i++) {
+        //    //sum=sum+i;
+        //    sum += i;
+        //    console.log("i="+i+",sum="+sum);
+        //}
+
+        //for (let a = 2; a < 10; a++) {
+        //    for (let b = 1; b < 10; b++) {
+        //        document.write("" + a + "x" + b + "=" + a * b+" ");
+        //    }
+        //    document.write("<br>");
+        //}
+
+
+        document.write("<table>");
+
+        for (let a = 2; a < 10; a++) {
+            document.write("</tr>");
+            for (let b = 1; b < 10; b++) {
+                document.write("<td>");
+                document.write("" + a + "x" + b + "=" + a * b + " ");
+                document.write("</td>");
+            }
+            document.write("</tr>");
+        }
+        document.write("</table>");
+
+        document.write("<br>");
+        document.write("<hr>");
+        document.write("<br>");
+
+        document.write("<table>");
+
+        for (let a = 2; a < 10; a++) {
+            document.write("<td>");
+            for (let b = 1; b < 10; b++) {
+                document.write("" + a + "x" + b + "=" + a * b + "<br>");
+            }
+            document.write("</td>");
+        }
+        document.write("</table>");
+
+    </script>
+</body>
+</html>

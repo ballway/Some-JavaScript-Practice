@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-tw" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Homework2 (評點製作)</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            padding-left: 450px;
+            padding-right: 450px;
+            background-color: gainsboro;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .nav_link {
+            font-size: 20px;
+        }
+
+        .title_text {
+            text-align:center;
+            background-color:antiquewhite;
+        }
+
+        h2 {
+            text-align: center;
+            font-size:40px;
+        }
+
+        .main_area {
+            text-align: center;
+            background-color: white;
+            user-select:none;
+        }
+
+        .star_default {
+            font-size: 140px;
+            color: darkgray;
+            background-color: white;
+        }
+
+        .star_activate {
+            font-size: 140px;
+            color: gold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <header>
+        <hgroup><h1>《JS 作業大禮包》</h1></hgroup>
+        <nav>
+            <a class="nav_link" href="homework1.html">九九乘法表</a>
+            <a class="nav_link" href="homework2.html">表單製作</a>
+            <a class="nav_link" href="homework3.html">評點製作</a>
+            <a class="nav_link" href="homework4.html">廣告輪播</a>
+        </nav>
+    </header>
+
+    <h1 class="title_text">【Rating】</h1>
+    <div class="main_area">
+        <span id="idstar1" class="star_default">★</span>
+        <span id="idstar2" class="star_default">★</span>
+        <span id="idstar3" class="star_default">★</span>
+        <span id="idstar4" class="star_default">★</span>
+        <span id="idstar5" class="star_default">★</span>
+    </div>
+    <br />
+    <h2 class="result" id="id_result">未評分</h2>
+
+    <script>
+        let get_rating_point = 0;
+        let tmp_point = 0;
+
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById("idstar" + i).addEventListener("mouseout", refresh_star);    //事件繫結，滑鼠滑出
+            document.getElementById("idstar" + i).addEventListener("click", click_star);    //事件繫結，點擊一下
+            document.getElementById("idstar" + i).addEventListener("dblclick", reset_rating);    //事件繫結，點擊一下
+        }
+
+        document.getElementById("idstar1").addEventListener("mouseover", mouseOver_star1);  //事件繫結，滑鼠滑入
+        document.getElementById("idstar2").addEventListener("mouseover", mouseOver_star2);  //事件繫結，滑鼠滑入
+        document.getElementById("idstar3").addEventListener("mouseover", mouseOver_star3);  //事件繫結，滑鼠滑入
+        document.getElementById("idstar4").addEventListener("mouseover", mouseOver_star4);  //事件繫結，滑鼠滑入
+        document.getElementById("idstar5").addEventListener("mouseover", mouseOver_star5);  //事件繫結，滑鼠滑入
+
+
+        function mouseOver_star1() {
+            tmp_point = 1;
+            activate_stars();
+        }
+
+        function mouseOver_star2() {
+            tmp_point = 2;
+            activate_stars();
+        }
+
+        function mouseOver_star3() {
+            tmp_point = 3;
+            activate_stars();
+        }
+
+        function mouseOver_star4() {
+            tmp_point = 4;
+            activate_stars();
+        }
+
+        function mouseOver_star5() {
+            tmp_point = 5;
+            activate_stars();
+        }
+
+        function activate_stars() {
+            document.getElementById("id_result").innerHTML = "評分中...";
+
+            for (let k = 1; k <= tmp_point; k++) {
+                document.getElementById("idstar" + k).className = "star_activate";
+            }
+        }
+
+
+        function refresh_star() {
+
+            if (get_rating_point != 0) {
+                document.getElementById("id_result").innerHTML = "  " + get_rating_point + " / 5  ";
+            }
+
+            if (get_rating_point == 1) {
+                document.getElementById("idstar1").className = "star_activate";
+                for (let k = 2; k <= 5; k++) {
+                    document.getElementById("idstar" + k).className = "star_default";
+                }
+            }
+            else if (get_rating_point == 2) {
+                for (let k = 1; k <= 2; k++) {
+                    document.getElementById("idstar" + k).className = "star_activate";
+                }
+                for (let k = 3; k <= 5; k++) {
+                    document.getElementById("idstar" + k).className = "star_default";
+                }
+            }
+            else if (get_rating_point == 3) {
+                for (let k = 1; k <= 3; k++) {
+                    document.getElementById("idstar" + k).className = "star_activate";
+                }
+                for (let k = 4; k <= 5; k++) {
+                    document.getElementById("idstar" + k).className = "star_default";
+                }
+            }
+            else if (get_rating_point == 4) {
+                for (let k = 1; k <= 4; k++) {
+                    document.getElementById("idstar" + k).className = "star_activate";
+                }
+                document.getElementById("idstar5").className = "star_default";
+            }
+            else if (get_rating_point == 5) {
+                for (let k = 1; k <= 5; k++) {
+                    document.getElementById("idstar" + k).className = "star_activate";
+                }
+            }
+            else {
+                for (let k = 1; k <= 5; k++) {
+                    document.getElementById("idstar" + k).className = "star_default";
+                }
+            }
+        }
+
+        /* 單擊星星後要執行的函式 */
+        function click_star() {
+            get_rating_point = tmp_point;
+            document.getElementById("id_result").innerHTML = "  " + get_rating_point + " / 5  ";
+        }
+
+        /* 雙擊星星後要執行的函式 */
+        function reset_rating() {
+            get_rating_point = 0;
+            tmp_point = 0;
+            document.getElementById("id_result").innerHTML = "未評分";
+        }
+    </script>
+
+</body>
+</html>
